@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "esp_task.h"
 #include "esp_task_wdt.h"
-                                        // 
+                                        // https://github.com/alexandresvifpb/Node_SD_PPG_TTGO-TBeam_V02.git
                                         // D:\Users\alexa\OneDrive\doutorado\2020\prototipos\firmware\node\Node_SD_PPG_TTGO-TBeam_V02          // localizacao do projeto
 #define MAIN_MESSAGE_INITIAL            ("D:\\Users\\alexa\\OneDrive\\doutorado\\2020\\prototipos\\firmware\\tests\\Node_SD_PPG_TTGO-TBeam_V02.00")
 #define MAIN_DEBUG                      (true)          // Variable that enables (1) or disables (0) the sending of data by serial to debug the program
@@ -142,10 +142,15 @@ void TaskSerial( void * pvParameters ) {
   // Mandatory infinite loop to keep the Task running
   while(true) {
 
-
     for (uint8_t i = 0; i < BUFFER_SIZE; i++) {
-      Serial.println(ppg_sensor.getIRRawData(i));
+      // Serial.println(ppg_sensor.getIRRawData(i));
       delay(20);
+    }
+
+    if ( Serial.available() ) {
+      int brigh = Serial.read();
+
+      Serial.println(brigh);
     }
 
     esp_task_wdt_reset();                                       // Reset watchdog counter
